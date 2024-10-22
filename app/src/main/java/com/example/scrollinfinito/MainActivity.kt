@@ -41,6 +41,8 @@ class MainActivity : AppCompatActivity() {
     private fun addTask() {
         val taskToAdd=txtTarea.text.toString()
         tasks.add(taskToAdd)
+        adapter.notifyDataSetChanged()
+        txtTarea.setText("")
     }
 
     private fun initView() {
