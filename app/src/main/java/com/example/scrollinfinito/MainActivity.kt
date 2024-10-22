@@ -13,6 +13,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var btnAniadir:Button
     lateinit var txtTarea:EditText
     lateinit var rvTarea:RecyclerView
+    var task= mutableListOf<String>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -30,6 +31,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun addTask() {
         val taskToAdd=txtTarea.text.toString()
+        task.add(taskToAdd)
     }
 
     private fun initView() {
