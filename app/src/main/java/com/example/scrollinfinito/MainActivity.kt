@@ -29,6 +29,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initRecyclerView() {
+        tasks= TaskApllication.prefs.getTasks()
         rvTarea.layoutManager=LinearLayoutManager(this)
         adapter=TaskAdapter(tasks){deleteTask(it)}
         rvTarea.adapter=adapter
@@ -37,6 +38,7 @@ class MainActivity : AppCompatActivity() {
     private fun deleteTask(posicion:Int){
         tasks.removeAt(posicion)
         adapter.notifyDataSetChanged()
+        TaskApllication.prefs.saveTasks(tasks)
     }
 
     private fun initListener() {
@@ -48,6 +50,7 @@ class MainActivity : AppCompatActivity() {
         tasks.add(taskToAdd)
         adapter.notifyDataSetChanged()
         txtTarea.setText("")
+        TaskApllication.prefs.saveTasks(tasks)
     }
 
     private fun initView() {
