@@ -46,11 +46,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun addTask() {
-        val taskToAdd=txtTarea.text.toString()
-        tasks.add(taskToAdd)
-        adapter.notifyDataSetChanged()
-        txtTarea.setText("")
-        TaskApllication.prefs.saveTasks(tasks)
+        if(!txtTarea.text.toString().equals("")){
+            val taskToAdd=txtTarea.text.toString()
+            tasks.add(taskToAdd)
+            adapter.notifyDataSetChanged()
+            txtTarea.setText("")
+            TaskApllication.prefs.saveTasks(tasks)
+        }
     }
 
     private fun initView() {
