@@ -30,8 +30,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun initRecyclerView() {
         rvTarea.layoutManager=LinearLayoutManager(this)
-        adapter=TaskAdapter(tasks)
+        adapter=TaskAdapter(tasks){deleteTask(it)}
         rvTarea.adapter=adapter
+    }
+
+    private fun deleteTask(posicion:Int){
+        tasks.removeAt(posicion)
+        adapter.notifyDataSetChanged()
     }
 
     private fun initListener() {
