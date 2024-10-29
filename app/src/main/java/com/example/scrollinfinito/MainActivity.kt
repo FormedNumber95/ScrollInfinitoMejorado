@@ -7,47 +7,80 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
+/**
+ * Main, que ejecuta toda la aplicacion
+ */
 class MainActivity : AppCompatActivity() {
-    lateinit var btnAniadir:Button
-    lateinit var txtTarea:EditText
-    lateinit var rvTarea:RecyclerView
 
-    lateinit var adapter:TaskAdapter
+    /** Botón para añadir una nueva tarea */
+    lateinit var btnAniadir: Button
 
-    var tasks= mutableListOf<String>()
+    /** Campo de texto para introducir la tarea */
+    lateinit var txtTarea: EditText
 
+    /** Vista de reciclador que muestra la lista de tareas */
+    lateinit var rvTarea: RecyclerView
+
+    /** Adaptador para la vista de reciclador de tareas */
+    lateinit var adapter: TaskAdapter
+
+    /** Lista mutable de tareas */
+    var tasks = mutableListOf<String>()
+
+    /**
+     * Método onCreate que inicializa la actividad y establece el contenido de la vista.
+     * @param savedInstanceState Estado previamente guardado de la actividad
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         aniadirTarea()
     }
 
-    private fun aniadirTarea(){
+    /**
+     * Método que inicializa las vistas, escuchadores y el RecyclerView.
+     */
+    private fun aniadirTarea() {
         initView()
         initListener()
         initRecyclerView()
     }
 
+    /**
+     * Inicializa el RecyclerView, asignando un LayoutManager y el adaptador.
+     * La lista de tareas se obtiene de las preferencias guardadas.
+     */
     private fun initRecyclerView() {
-        tasks= TaskApllication.prefs.getTasks()
-        rvTarea.layoutManager=LinearLayoutManager(this)
-        adapter=TaskAdapter(tasks){deleteTask(it)}
-        rvTarea.adapter=adapter
+        tasks = TaskApllication.prefs.getTasks()
+        rvTarea.layoutManager = LinearLayoutManager(this)
+        adapter = TaskAdapter(tasks) { deleteTask(it) }
+        rvTarea.adapter = adapter
     }
 
-    private fun deleteTask(posicion:Int){
+    /**
+     * Elimina una tarea de la lista en la posición especificada.
+     * @param posicion La posición de la tarea a eliminar en la lista
+     */
+    private fun deleteTask(posicion: Int) {
         tasks.removeAt(posicion)
         adapter.notifyDataSetChanged()
         TaskApllication.prefs.saveTasks(tasks)
     }
 
+    /**
+     * Asigna un listener de clic al botón de añadir tarea.
+     */
     private fun initListener() {
-        btnAniadir.setOnClickListener{addTask()}
+        btnAniadir.setOnClickListener { addTask() }
     }
 
+    /**
+     * Añade una nueva tarea a la lista si el campo de texto no está vacío.
+     * La lista de tareas actualizada se guarda en las preferencias.
+     */
     private fun addTask() {
-        if(!txtTarea.text.toString().equals("")){
-            val taskToAdd=txtTarea.text.toString()
+        if (!txtTarea.text.toString().isEmpty()) {
+            val taskToAdd = txtTarea.text.toString()
             tasks.add(taskToAdd)
             adapter.notifyDataSetChanged()
             txtTarea.setText("")
@@ -55,9 +88,12 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Inicializa las vistas de la actividad obteniéndolas del diseño.
+     */
     private fun initView() {
-        btnAniadir=findViewById(R.id.btnAniadir)
-        txtTarea=findViewById(R.id.txtTarea)
-        rvTarea=findViewById(R.id.rvTarea)
+        btnAniadir = findViewById(R.id.btnAniadir)
+        txtTarea = findViewById(R.id.txtTarea)
+        rvTarea = findViewById(R.id.rvTarea)
     }
 }
