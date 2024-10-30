@@ -1,5 +1,6 @@
 package com.example.scrollinfinito
 
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -23,6 +24,9 @@ class MainActivity : AppCompatActivity() {
 
     /** Adaptador para la vista de reciclador de tareas */
     lateinit var adapter: TaskAdapter
+
+    /**Sonido que se ejecuta al añadir una nueva tarea*/
+    lateinit var mp: MediaPlayer
 
     /** Lista mutable de tareas */
     var tasks = mutableListOf<String>()
@@ -82,6 +86,7 @@ class MainActivity : AppCompatActivity() {
         if (!txtTarea.text.toString().trim().isEmpty()) {
             val taskToAdd = txtTarea.text.toString()
             tasks.add(taskToAdd)
+            mp.start()
             adapter.notifyDataSetChanged()
             txtTarea.setText("")
             TaskApllication.prefs.saveTasks(tasks)
@@ -92,6 +97,7 @@ class MainActivity : AppCompatActivity() {
      * Inicializa las vistas de la actividad obteniéndolas del diseño.
      */
     private fun initView() {
+        mp = MediaPlayer.create(this, R.raw.ding)
         btnAniadir = findViewById(R.id.btnAniadir)
         txtTarea = findViewById(R.id.txtTarea)
         rvTarea = findViewById(R.id.rvTarea)
