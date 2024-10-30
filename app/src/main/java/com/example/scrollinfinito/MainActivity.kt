@@ -79,7 +79,7 @@ class MainActivity : AppCompatActivity() {
      * La lista de tareas actualizada se guarda en las preferencias.
      */
     private fun addTask() {
-        if (!txtTarea.text.toString().isEmpty()) {
+        if (!txtTarea.text.toString().trim().isEmpty()) {
             val taskToAdd = txtTarea.text.toString()
             tasks.add(taskToAdd)
             adapter.notifyDataSetChanged()
