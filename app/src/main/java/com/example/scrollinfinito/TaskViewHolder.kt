@@ -6,23 +6,22 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 /**
- * ViewHolder para el RecyclerView que muestra una tarea individual.
- * @param view Vista de cada elemento de tarea.
+ * ViewHolder para representar un elemento de tarea en el RecyclerView.
+ *
+ * @param view La vista que contiene los elementos visuales para una tarea.
  */
-
-class TaskViewHolder (view:View):RecyclerView.ViewHolder(view){
-    /** TextView que muestra el texto de la tarea */
-    private val tvTask:TextView=view.findViewById(R.id.tvTask)
-    /** ImageView que representa el ícono para marcar la tarea como completada */
-    private val imgCheck:ImageView=view.findViewById(R.id.imgCheck)
+class TaskViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    private val tvTask: TextView = view.findViewById(R.id.tvTask) // Texto de la tarea
+    private val imgCheck: ImageView = view.findViewById(R.id.imgCheck) // Imagen de verificación
 
     /**
-     * Vincula la tarea a los elementos de la vista y asigna un listener para el icono de completado.
-     * @param task Tarea a mostrar en el TextView.
-     * @param onItemDone Función de callback que se llama al hacer clic en el icono de completado.
+     * Asocia la tarea y establece el comportamiento al marcar la tarea como completada.
+     *
+     * @param task La descripción de la tarea que se mostrará.
+     * @param onItemDone Callback que se ejecuta cuando se hace clic en la imagen de verificación.
      */
-    fun render(taks:String,onItemDone:(Int) -> Unit){
-        tvTask.text=taks
-        imgCheck.setOnClickListener{onItemDone(adapterPosition)}
+    fun render(task: String, onItemDone: (Int) -> Unit) {
+        tvTask.text = task // Establece el texto de la tarea
+        imgCheck.setOnClickListener { onItemDone(adapterPosition) } // Configura el clic en la imagen
     }
 }

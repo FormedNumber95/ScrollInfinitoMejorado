@@ -3,21 +3,18 @@ package com.example.scrollinfinito
 import android.app.Application
 
 /**
- * Clase de aplicación que inicializa las preferencias compartidas al iniciar la aplicación.
- * Extiende de [Application] para establecer un contexto de aplicación global.
+ * Clase de aplicación personalizada que inicializa la base de datos al inicio de la aplicación.
  */
+class TaskApllication : Application() {
+    // Instancia de DatabaseHelper para gestionar las operaciones de la base de datos.
+    lateinit var dbHelper: DatabaseHelper
 
-class TaskApllication:Application() {
-    companion object{
-        /** Instancia de la clase Preferences para almacenar y recuperar datos de preferencias compartidas */
-        lateinit var prefs:Preferences
-    }
     /**
-     * Método onCreate que se llama al iniciar la aplicación.
-     * Inicializa la instancia de [Preferences] con el contexto de la aplicación.
+     * Método llamado cuando la aplicación se crea.
+     * Se inicializa el DatabaseHelper para permitir operaciones de base de datos en toda la aplicación.
      */
     override fun onCreate() {
         super.onCreate()
-        prefs=Preferences(baseContext)
+        dbHelper = DatabaseHelper(this) // Inicializa el helper de la base de datos
     }
 }

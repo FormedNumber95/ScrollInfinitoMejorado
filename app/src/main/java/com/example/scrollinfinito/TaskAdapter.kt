@@ -5,38 +5,42 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
 /**
- * Adaptador para el RecyclerView que muestra una lista de tareas.
- * @param tasks Lista de tareas a mostrar en el RecyclerView.
- * @param onItemDone Función de callback que se ejecuta cuando se marca una tarea como completada.
+ * Adaptador para gestionar la lista de tareas en un RecyclerView.
+ *
+ * @param tasks La lista mutable de tareas a mostrar.
+ * @param onItemDone Callback que se ejecuta cuando se marca una tarea como completada.
  */
 class TaskAdapter(
-    private val tasks: List<String>,
+    private val tasks: MutableList<Task>,
     private val onItemDone: (Int) -> Unit
 ) : RecyclerView.Adapter<TaskViewHolder>() {
 
     /**
-     * Crea un nuevo ViewHolder para representar un elemento de la lista.
-     * @param parent El ViewGroup en el que se añadirá el nuevo ViewHolder.
-     * @param viewType Tipo de vista del nuevo ViewHolder.
-     * @return Un nuevo TaskViewHolder inicializado con la vista de un elemento de tarea.
+     * Crea un nuevo ViewHolder para representar un elemento de la lista de tareas.
+     *
+     * @param parent El ViewGroup al que se adjuntará el nuevo ViewHolder.
+     * @param viewType El tipo de vista de los elementos que se crean.
+     * @return Un nuevo TaskViewHolder que contiene la vista para un elemento.
      */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
-        val layoutInflater = LayoutInflater.from(parent.context)
-        return TaskViewHolder(layoutInflater.inflate(R.layout.item_task, parent, false))
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_task, parent, false)
+        return TaskViewHolder(view)
     }
 
     /**
-     * Devuelve el número de elementos en la lista de tareas.
-     * @return Número de tareas en la lista.
-     */
-    override fun getItemCount() = tasks.size
-
-    /**
-     * Vincula los datos de una tarea específica a un ViewHolder.
-     * @param holder TaskViewHolder que se actualizará con los datos de la tarea.
-     * @param position Posición del elemento en la lista de tareas.
+     * Asocia los datos de una tarea a un ViewHolder específico.
+     *
+     * @param holder El ViewHolder que contiene la vista para un elemento de la lista.
+     * @param position La posición de la tarea en la lista.
      */
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
-        holder.render(tasks[position], onItemDone)
+        holder.render(tasks[position].description) { onItemDone(position) }
     }
+
+    /**
+     * Devuelve el número total de tareas en la lista.
+     *
+     * @return El tamaño de la lista de tareas.
+     */
+    override fun getItemCount(): Int = tasks.size
 }
